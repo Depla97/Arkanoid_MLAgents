@@ -9,11 +9,17 @@ using System;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
-public class Pad : MonoBehaviour
-{
+using Unity.MLAgents;
+using Unity.MLAgents.Actuators;
+
+public class Pad : Agent
+{   
+    
     public static event Action OnPadHitsBall;
     public static event Action<string> OnBonusPickup;
     public static event Action OnLostLife;
+
+    [SerializeField] private Transform ballTransform;
 
     [SerializeField]
     float maxAcceleration;
@@ -56,6 +62,13 @@ public class Pad : MonoBehaviour
     float widePadActiveTime;
 
     List<Ball> ballsOnPad;
+
+    private void OnTriggerEnter2D(Collider other){
+        if(other.CompareTag("Ball")){
+            AddReward(20f);
+            EndEpisode();
+        }
+    }
 
     void Start()
     {
@@ -274,6 +287,7 @@ public class Pad : MonoBehaviour
         var balls = Object.FindObjectsOfType<Ball>();
         if (balls.Length == 0)
         {
+            AddReward(-10f);
             OnLostLife?.Invoke();
             HandleOnLostLife();
         }
