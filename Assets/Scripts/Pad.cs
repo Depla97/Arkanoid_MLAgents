@@ -10,6 +10,7 @@ using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 using Unity.MLAgents;
+using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Actuators;
 
 public class Pad : Agent
@@ -19,7 +20,7 @@ public class Pad : Agent
     public static event Action<string> OnBonusPickup;
     public static event Action OnLostLife;
 
-    [SerializeField] private Transform ballTransform;
+    [SerializeField] public Transform ballTransform;
 
     [SerializeField]
     float maxAcceleration;
@@ -63,12 +64,12 @@ public class Pad : Agent
 
     List<Ball> ballsOnPad;
 
-    private void OnTriggerEnter2D(Collider other){
-        if(other.CompareTag("Ball")){
-            AddReward(20f);
-            EndEpisode();
-        }
-    }
+    // private void OnTriggerEnter2D(Collider other){
+    //     if(other.CompareTag("Ball")){
+    //         AddReward(20f);
+    //         EndEpisode();
+    //     }
+    // }
 
     void Start()
     {
@@ -129,6 +130,10 @@ public class Pad : Agent
 
     void OnTriggerEnter2D(Collider2D collision)
     {
+         if(collision.CompareTag("Ball")){
+            AddReward(20f);
+            EndEpisode();
+        }
         if (collision.gameObject.CompareTag("MultiballBonus"))
         {
             bonusLogic.SpawnMultiBalls();
@@ -290,6 +295,24 @@ public class Pad : Agent
             AddReward(-10f);
             OnLostLife?.Invoke();
             HandleOnLostLife();
+            EndEpisode();
         }
+    }
+
+
+    public override void OnEpisodeBegin(){
+        FireBallsInRandomDirections();
+    }
+
+    public override void CollectObservations(VectorSensor sensor){
+        sensor.AddObservation(ballTransform.localPosition);
+        sensor.AddObservation(this.transform.localPosition);
+    }
+
+    public override void OnActionReceived(ActionBuffers actionBuffers){
+        float moveX = actionBuffers.ContinuousActions[0];
+        Debug.Log("Pippo");
+        transform.localPosition += new Vector3(moveX, 0, 0) * Time.deltaTime * 2;
+
     }
 }
