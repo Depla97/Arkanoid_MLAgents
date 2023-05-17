@@ -131,8 +131,8 @@ public class Pad : Agent
     void OnTriggerEnter2D(Collider2D collision)
     {
          if(collision.CompareTag("Ball")){
-            AddReward(20f);
-            EndEpisode();
+            AddReward(10f);
+            Debug.Log(ballTransform.localPosition);
         }
         if (collision.gameObject.CompareTag("MultiballBonus"))
         {
@@ -292,10 +292,13 @@ public class Pad : Agent
         var balls = Object.FindObjectsOfType<Ball>();
         if (balls.Length == 0)
         {
-            AddReward(-10f);
+            
             OnLostLife?.Invoke();
             HandleOnLostLife();
+
+            AddReward(-100f);
             EndEpisode();
+            
         }
     }
 
@@ -306,13 +309,14 @@ public class Pad : Agent
 
     public override void CollectObservations(VectorSensor sensor){
         sensor.AddObservation(ballTransform.localPosition);
+        Debug.Log(ballTransform.localPosition);
         sensor.AddObservation(this.transform.localPosition);
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers){
         float moveX = actionBuffers.ContinuousActions[0];
-        Debug.Log("Pippo");
-        transform.localPosition += new Vector3(moveX, 0, 0) * Time.deltaTime * 2;
+        Debug.Log(actionBuffers.ContinuousActions[0]);
+        this.transform.localPosition += new Vector3(moveX, 0, 0) * Time.deltaTime * 10;
 
     }
 }

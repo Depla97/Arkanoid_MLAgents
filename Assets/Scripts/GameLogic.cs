@@ -46,7 +46,8 @@ public class GameLogic : MonoBehaviour
 
     void HandleOnLostLife()
     {
-        lives.Value -= 1;
+        // lives.Value -= 1;
+        // Debug.Log("Vita persa");
         if (lives.Value == 0)
         {
             OnGameOver?.Invoke();
@@ -68,8 +69,8 @@ public class GameLogic : MonoBehaviour
 
     void HandleNextLevel()
     {
-        OnLevelCleared?.Invoke(level.Value);
-        StartCoroutine(nameof(LoadNewLevel));
+        // OnLevelCleared?.Invoke(level.Value);
+        // StartCoroutine(nameof(LoadNewLevel));
     }
 
     IEnumerator LoadNewLevel()

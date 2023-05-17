@@ -1076,7 +1076,7 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
-  ballTransform: {fileID: 897322918}
+  ballTransform: {fileID: 3039885613299681260, guid: c5e57a9beefc74c328b0267b2496eafe, type: 3}
   maxAcceleration: 120
   maxSpeed: 30
   ballPrefab: {fileID: 3039885613299681258, guid: c5e57a9beefc74c328b0267b2496eafe, type: 3}
@@ -1187,7 +1187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 1
+    VectorObservationSize: 4
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 1
@@ -1198,7 +1198,7 @@ MonoBehaviour:
     hasUpgradedBrainParametersWithActionSpec: 1
   m_Model: {fileID: 0}
   m_InferenceDevice: 0
-  m_BehaviorType: 0
+  m_BehaviorType: 2
   m_BehaviorName: My Behavior
   TeamId: 0
   m_UseChildSensors: 1
