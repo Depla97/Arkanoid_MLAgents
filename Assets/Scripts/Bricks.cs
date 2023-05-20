@@ -16,12 +16,17 @@ public class Bricks : MonoBehaviour
 
     [SerializeField]
     GameObject brickExplosionPrefab;
-
+    
+    GameObject playerPad;
+    
     Tilemap tilemap;
-
+    
+    
     private void Awake()
     {
         tilemap = gameObject.GetComponent<Tilemap>();
+        playerPad = GameObject.Find("PlayerPad");
+        Debug.Log(playerPad);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -86,6 +91,8 @@ public class Bricks : MonoBehaviour
                 ExplodeBrick(hitPos, hitNormal, tile);
             }
         }
+
+        playerPad.GetComponent<PadAgent>().HitBrickScoring();
     }
     
     private void ExplodeBrick(Vector3 hitPos, Vector3 normal, Tile tile)

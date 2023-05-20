@@ -23,6 +23,13 @@ public class PadAgent : Agent
         AddReward(10f);
         Debug.Log("add 10 score: ball collided with the pad");
     }
+    
+    public void HitBrickScoring()
+    {
+        AddReward(15f);
+        Debug.Log("add 15 score: ball hit with the Brick");
+    }
+    
     public override void OnEpisodeBegin(){
         GetComponent<Pad>().FireBallsInRandomDirections();
     }
@@ -56,6 +63,8 @@ public class PadAgent : Agent
         this.gameObject.transform.localPosition += new Vector3(moveX, 0, 0) * Time.deltaTime * 30;
 
     }
+    
+    
 
     public void Death()
     {
