@@ -69,15 +69,16 @@ public class GameLogic : MonoBehaviour
 
     void HandleNextLevel()
     {
-        // OnLevelCleared?.Invoke(level.Value);
-        // StartCoroutine(nameof(LoadNewLevel));
+         OnLevelCleared?.Invoke(level.Value);
+         StartCoroutine(nameof(LoadNewLevel));
     }
 
     IEnumerator LoadNewLevel()
     {
         yield return new WaitForSeconds(0.7f);
-
-        level.Value += 1;
+        
+        //level.Value += 1;
+        level.Value = 1;
         SceneManager.LoadScene("Levels");
     }
 
