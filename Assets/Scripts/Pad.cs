@@ -13,14 +13,14 @@ using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Actuators;
 
-public class Pad : Agent
+public class Pad : MonoBehaviour
 {   
     
     public static event Action OnPadHitsBall;
     public static event Action<string> OnBonusPickup;
     public static event Action OnLostLife;
 
-    [SerializeField] public Transform ballTransform;
+
 
     [SerializeField]
     float maxAcceleration;
@@ -130,10 +130,6 @@ public class Pad : Agent
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-         if(collision.CompareTag("Ball")){
-            AddReward(10f);
-            Debug.Log(ballTransform.localPosition);
-        }
         if (collision.gameObject.CompareTag("MultiballBonus"))
         {
             bonusLogic.SpawnMultiBalls();
@@ -172,6 +168,7 @@ public class Pad : Agent
             else if (!ballsOnPad.Contains(ball))
             {
                 OnPadHitsBall?.Invoke();
+                GetComponent<PadAgent>().CatchBallScoring();
             }
         }
     }
@@ -191,7 +188,8 @@ public class Pad : Agent
 
     void MakeSticky()
     {
-        glueBall = true;
+        //dont need glue ball yet
+        glueBall = false;
     }
 
     void WidenPad()
@@ -222,7 +220,7 @@ public class Pad : Agent
         animator.SetBool("Has Laser", useLaser);
     }
 
-    void FireBallsInRandomDirections()
+    public void FireBallsInRandomDirections()
     {
         glueBall = false;
 
@@ -243,6 +241,7 @@ public class Pad : Agent
         Ball ball = ballObj.GetComponent<Ball>();
         ballObj.transform.localPosition = ball.CenterOnPad(this.gameObject);
         ballsOnPad.Add(ball);
+        FireBallsInRandomDirections();
     }
 
     void FireLaser()
@@ -294,29 +293,16 @@ public class Pad : Agent
         {
             
             OnLostLife?.Invoke();
+            GetComponent<PadAgent>().Death();
             HandleOnLostLife();
 
-            AddReward(-100f);
-            EndEpisode();
+            
             
         }
     }
 
-
-    public override void OnEpisodeBegin(){
-        FireBallsInRandomDirections();
-    }
-
-    public override void CollectObservations(VectorSensor sensor){
-        sensor.AddObservation(ballTransform.localPosition);
-        Debug.Log(ballTransform.localPosition);
-        sensor.AddObservation(this.transform.localPosition);
-    }
-
-    public override void OnActionReceived(ActionBuffers actionBuffers){
-        float moveX = actionBuffers.ContinuousActions[0];
-        Debug.Log(actionBuffers.ContinuousActions[0]);
-        this.transform.localPosition += new Vector3(moveX, 0, 0) * Time.deltaTime * 10;
-
+    public List<Ball> getBalls()
+    {
+        return this.ballsOnPad;
     }
 }

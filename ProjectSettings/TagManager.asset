@@ -12,6 +12,7 @@ TagManager:
   - LaserBonus
   - LaserBeam
   - Wall
+  - DeathZone
   layers:
   - Default
   - TransparentFX

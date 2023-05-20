@@ -1,8 +1,9 @@
+using UnityEditor.UI;
 using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    Rigidbody2D body;
+    public Rigidbody2D body;
     SpriteRenderer spriteRenderer;
     Animator animator;
 
@@ -78,6 +79,12 @@ public class Ball : MonoBehaviour
         {
             AdjustVelocity(body.velocity);
         }
+
+        if (collision.gameObject.CompareTag("DeathZone"))
+        {
+            //Debug.Log("ball destroyed");
+            Destroy(this.gameObject);
+        }
     }
 
     private void AdjustVelocity(Vector2 velocity)
@@ -109,5 +116,10 @@ public class Ball : MonoBehaviour
         body.velocity /= 3f;
         animator.enabled = true;
         animator.Play("BallWinsAnim", -1, 0f);
+    }
+
+    public Rigidbody2D getBody()
+    {
+        return this.body;
     }
 }
