@@ -6,6 +6,7 @@ using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 public class PadAgent : Agent
 {
@@ -13,27 +14,41 @@ public class PadAgent : Agent
     private BufferSensorComponent BuffSensor;
     private Pad MyPad;
     private GameLogic logic;
+    private int gameStat,counter;
     private void Start()
     {
         BuffSensor = GetComponent<BufferSensorComponent>();
         MyPad = GetComponent<Pad>();
         logic = GameObject.Find("GameLogic").GetComponent<GameLogic>();
+        gameStat = 0;
+        counter = 0;
     }
 
     public void CatchBallScoring()
     {
         AddReward(10f);
-        Debug.Log("add 10 score: ball collided with the pad");
+        gameStat += 1;
+        //Debug.Log("add 10 score: ball collided with the pad");
     }
     
     public void HitBrickScoring()
     {
         AddReward(15f);
-        Debug.Log("add 15 score: ball hit with the Brick");
+        gameStat += 1;
+        //Debug.Log("add 15 score: ball hit with the Brick");
     }
     
     public override void OnEpisodeBegin(){
         GetComponent<Pad>().FireBallsInRandomDirections();
+        counter++;
+        if (counter > 20)
+        {
+            Debug.Log("TotalScore: "+gameStat);
+            counter = 0;
+            gameStat = 0;
+            
+        }
+
     }
 
     public override void CollectObservations(VectorSensor sensor){
@@ -66,13 +81,13 @@ public class PadAgent : Agent
 
     }
     
-    
-
     public void Death()
     {
         //Debug.Log("death registered");
-        AddReward(-50f);
         logic.ReloadLevel(1);
+        AddReward(-150f);
+        gameStat -= 1;
+        //Debug.Log("Gamestat:"+gameStat);
         EndEpisode();
         
     }

@@ -48,7 +48,7 @@ public class GameLogic : MonoBehaviour
 
     void HandleOnLostLife()
     {
-        // lives.Value -= 1;
+        //lives.Value -= 1;
         // Debug.Log("Vita persa");
         if (lives.Value == 0)
         {
