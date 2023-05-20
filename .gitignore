@@ -73,3 +73,9 @@ crashlytics-build.properties
 manifest.json
 packages-lock.json
 UpgradeLog.htm
+
+/Packages/manifest.json
+/Packages/packages-lock.json
+UpgradeLog.htm
+/projectSettings/BurstAotSettings_Android.json
+/projectSettings/BurstAotSettings_StandaloneWindows.json
