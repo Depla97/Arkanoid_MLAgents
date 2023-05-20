@@ -10,6 +10,8 @@ public class GameLogic : MonoBehaviour
     public static event Action OnGameOver;
     public static event Action<int> OnLevelCleared;
 
+    private GameObject currentLevel;
+
     [SerializeField]
     IntVar lives;
 
@@ -96,12 +98,20 @@ public class GameLogic : MonoBehaviour
 
             // Load a level prefab. Note that level numbers are 1-based.
             GameObject levelPrefab = levelPrefabs[levelNo - 1];
-            Instantiate(levelPrefab, levelContainer.transform);
+            currentLevel = Instantiate(levelPrefab, levelContainer.transform);
         }
         else if (levelNo > levelPrefabs.Length)
         {
             Won();
         }
+    }
+
+    public void ReloadLevel(int selectLevel)
+    {
+        
+        Destroy(currentLevel);
+        LoadLevelMap(selectLevel);
+        level.Value = selectLevel;
     }
 
     void HandleBrokenBrick(TileBase _brick)

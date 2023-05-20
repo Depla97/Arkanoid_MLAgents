@@ -12,10 +12,12 @@ public class PadAgent : Agent
 
     private BufferSensorComponent BuffSensor;
     private Pad MyPad;
+    private GameLogic logic;
     private void Start()
     {
         BuffSensor = GetComponent<BufferSensorComponent>();
         MyPad = GetComponent<Pad>();
+        logic = GameObject.Find("GameLogic").GetComponent<GameLogic>();
     }
 
     public void CatchBallScoring()
@@ -70,7 +72,9 @@ public class PadAgent : Agent
     {
         //Debug.Log("death registered");
         AddReward(-50f);
+        logic.ReloadLevel(1);
         EndEpisode();
+        
     }
         
 }
