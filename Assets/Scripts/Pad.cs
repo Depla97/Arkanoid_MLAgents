@@ -291,13 +291,9 @@ public class Pad : MonoBehaviour
         var balls = Object.FindObjectsOfType<Ball>();
         if (balls.Length == 0)
         {
-            
             OnLostLife?.Invoke();
             GetComponent<PadAgent>().Death();
             HandleOnLostLife();
-
-            
-            
         }
     }
 
