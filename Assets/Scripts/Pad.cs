@@ -20,7 +20,7 @@ public class Pad : Agent
     public static event Action<string> OnBonusPickup;
     public static event Action OnLostLife;
 
-    [SerializeField] public Transform ballTransform;
+    public Transform ballTransform;
 
     [SerializeField]
     float maxAcceleration;
@@ -88,6 +88,8 @@ public class Pad : Agent
         animator = GetComponent<Animator>();
 
         SpawnBallOnPad();
+        
+        
     }
 
     void FixedUpdate()
@@ -130,10 +132,6 @@ public class Pad : Agent
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-         if(collision.CompareTag("Ball")){
-            AddReward(10f);
-            Debug.Log(ballTransform.localPosition);
-        }
         if (collision.gameObject.CompareTag("MultiballBonus"))
         {
             bonusLogic.SpawnMultiBalls();
@@ -163,7 +161,12 @@ public class Pad : Agent
         Ball ball;
 
         if (collision.gameObject.TryGetComponent<Ball>(out ball))
-        {
+        {   
+            
+            AddReward(10f);
+            Debug.Log("Collision! +10");
+            
+        
             if (glueBall && !ballsOnPad.Contains(ball) && HitsFromTop(collision))
             {
                 ball.GlueToPad(this.gameObject);
@@ -178,13 +181,18 @@ public class Pad : Agent
 
     bool HitsFromTop(Collision2D collision)
     {
+        String tag = collision.gameObject.tag;
+        Debug.Log(tag);
         const float ANGLE_TOLERANCE = 3f;
         if (collision.contactCount > 0)
         {
             ContactPoint2D contact = collision.GetContact(0);
             float angle = Vector2.Angle(contact.normal, Vector2.down);
             return angle < ANGLE_TOLERANCE;
+
+            
         }
+        
 
         return false;
     }
@@ -296,10 +304,24 @@ public class Pad : Agent
             OnLostLife?.Invoke();
             HandleOnLostLife();
 
-            AddReward(-100f);
+            AddReward(-50f);
+            Debug.Log("Ball Lost! -50");
             EndEpisode();
             
         }
+        
+        // // Ottenere la direzione come un vettore normalizzato
+        // Vector2 direction = ballTransform.up.normalized;
+
+        // // Ottenere l'inizio della retta (posizione della pallina)
+        // Vector2 startPoint = ballTransform.position;
+
+        // // Ottenere il punto finale della retta (ad esempio, a una distanza specifica)
+        // float distance = 5f;
+        // Vector2 endPoint = startPoint + direction * distance;
+
+        // // Utilizzare la retta come necessario (ad esempio, per disegnarla nella scena)
+        // Debug.DrawLine(startPoint, endPoint, Color.red);
     }
 
 
@@ -308,15 +330,21 @@ public class Pad : Agent
     }
 
     public override void CollectObservations(VectorSensor sensor){
-        sensor.AddObservation(ballTransform.localPosition);
-        Debug.Log(ballTransform.localPosition);
-        sensor.AddObservation(this.transform.localPosition);
+            Ball ball = GameObject.FindObjectOfType<Ball>();
+            
+            // Ottieni il Transform dall'oggetto trovato
+            if(ball != null){
+                ballTransform = ball.transform;
+                sensor.AddObservation(ballTransform.localPosition);
+                sensor.AddObservation(ballTransform.position);}
+            // Debug.Log(ballTransform.localPosition);
+            sensor.AddObservation(this.transform.localPosition);
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers){
         float moveX = actionBuffers.ContinuousActions[0];
-        Debug.Log(actionBuffers.ContinuousActions[0]);
-        this.transform.localPosition += new Vector3(moveX, 0, 0) * Time.deltaTime * 10;
+        // Debug.Log(actionBuffers.ContinuousActions[0]);
+        this.transform.localPosition += new Vector3(moveX, 0, 0) * Time.deltaTime * 6;
 
     }
 }
