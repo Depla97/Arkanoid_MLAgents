@@ -26,7 +26,6 @@ public class Bricks : MonoBehaviour
     {
         tilemap = gameObject.GetComponent<Tilemap>();
         playerPad = GameObject.Find("PlayerPad");
-        Debug.Log(playerPad);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

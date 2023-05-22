@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
+    private Pad pad;
     public Rigidbody2D body;
     SpriteRenderer spriteRenderer;
     Animator animator;
@@ -18,6 +19,10 @@ public class Ball : MonoBehaviour
     private void OnDisable()
     {
         GameLogic.OnLevelCleared -= OnLevelCleared;
+    }
+
+    public void AssignPad(Pad pad){
+        this.pad = pad;
     }
 
     void Awake()
@@ -83,6 +88,7 @@ public class Ball : MonoBehaviour
         if (collision.gameObject.CompareTag("DeathZone"))
         {
             //Debug.Log("ball destroyed");
+            this.pad.ball = null;
             Destroy(this.gameObject);
         }
     }

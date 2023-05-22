@@ -64,6 +64,8 @@ public class Pad : MonoBehaviour
 
     List<Ball> ballsOnPad;
 
+    public Ball ball;
+
     // private void OnTriggerEnter2D(Collider other){
     //     if(other.CompareTag("Ball")){
     //         AddReward(20f);
@@ -238,7 +240,8 @@ public class Pad : MonoBehaviour
     {
         GameObject ballObj = Instantiate(ballPrefab, Vector3.zero, Quaternion.identity);
         ballObj.transform.parent = transform;
-        Ball ball = ballObj.GetComponent<Ball>();
+        ball = ballObj.GetComponent<Ball>();
+        ball.AssignPad(this);
         ballObj.transform.localPosition = ball.CenterOnPad(this.gameObject);
         ballsOnPad.Add(ball);
         FireBallsInRandomDirections();
@@ -288,8 +291,7 @@ public class Pad : MonoBehaviour
             PowerDownWidePad();
         }
 
-        var balls = Object.FindObjectsOfType<Ball>();
-        if (balls.Length == 0)
+        if (ball==null)
         {
             OnLostLife?.Invoke();
             GetComponent<PadAgent>().Death();
