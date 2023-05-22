@@ -41,11 +41,12 @@ public class PadAgent : Agent
     public override void OnEpisodeBegin(){
         GetComponent<Pad>().FireBallsInRandomDirections();
         counter++;
-        if (counter > 20)
+        if (counter > 5)
         {
             Debug.Log("TotalScore: "+gameStat);
             counter = 0;
             gameStat = 0;
+            logic.ReloadLevel(1);
             
         }
 
@@ -84,7 +85,6 @@ public class PadAgent : Agent
     public void Death()
     {
         //Debug.Log("death registered");
-        logic.ReloadLevel(1);
         AddReward(-150f);
         gameStat -= 1;
         //Debug.Log("Gamestat:"+gameStat);
