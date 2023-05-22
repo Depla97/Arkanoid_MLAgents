@@ -17,7 +17,7 @@ public class Bricks : MonoBehaviour
     [SerializeField]
     GameObject brickExplosionPrefab;
     
-    GameObject playerPad;
+    Pad playerPad;
     
     Tilemap tilemap;
     
@@ -25,7 +25,12 @@ public class Bricks : MonoBehaviour
     private void Awake()
     {
         tilemap = gameObject.GetComponent<Tilemap>();
-        playerPad = GameObject.Find("PlayerPad");
+        //playerPad = GameObject.Find("PlayerPad");
+    }
+
+    public void AssignPad(Pad levelPad)
+    {
+        playerPad = levelPad;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

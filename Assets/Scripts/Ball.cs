@@ -23,6 +23,7 @@ public class Ball : MonoBehaviour
 
     public void AssignPad(Pad pad){
         this.pad = pad;
+        this.pad.LocalBalls.Add(this);
     }
 
     void Awake()
@@ -88,7 +89,7 @@ public class Ball : MonoBehaviour
         if (collision.gameObject.CompareTag("DeathZone"))
         {
             //Debug.Log("ball destroyed");
-            this.pad.ball = null;
+            this.pad.LocalBalls.Remove(this);
             Destroy(this.gameObject);
         }
     }

@@ -14,14 +14,16 @@ public class BonusesLogic : MonoBehaviour
     [SerializeField]
     float multiballsSpawnRadius;
 
-    public void SpawnMultiBalls()
+    public void SpawnMultiBalls(Pad pad)
     {
         // Find a ball (it can return any with that tag):
-        GameObject ball = GameObject.FindWithTag("Ball");
-
-        if (ball == null)
+        //GameObject ball = GameObject.FindWithTag("Ball");
+        //List<Ball> generatedBalls = new List<Ball>();
+        if (pad.LocalBalls.Count == 0)
             return;
-
+        
+        Ball ball = pad.LocalBalls[Random.Range(0,pad.LocalBalls.Count)];
+        
         // Needed to avoid spawning balls inside the bricks.
         TilemapCollider2D tileMapCollider = Object.FindObjectOfType<TilemapCollider2D>();
 
@@ -48,6 +50,7 @@ public class BonusesLogic : MonoBehaviour
                 {
                     GameObject newBallObj = Instantiate(ballPrefab, where, Quaternion.identity);
                     Ball newBall = newBallObj.GetComponent<Ball>();
+                    newBall.AssignPad(pad);
                     Vector2 dir = new Vector2(dirX, dirY);
                     newBall.Fire(dir);
                 }

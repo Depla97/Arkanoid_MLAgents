@@ -9,10 +9,6 @@ using System;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
-using Unity.MLAgents;
-using Unity.MLAgents.Sensors;
-using Unity.MLAgents.Actuators;
-
 public class Pad : MonoBehaviour
 {   
     
@@ -64,7 +60,7 @@ public class Pad : MonoBehaviour
 
     List<Ball> ballsOnPad;
 
-    public Ball ball;
+    public List<Ball> LocalBalls;
 
     // private void OnTriggerEnter2D(Collider other){
     //     if(other.CompareTag("Ball")){
@@ -134,7 +130,7 @@ public class Pad : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("MultiballBonus"))
         {
-            bonusLogic.SpawnMultiBalls();
+            bonusLogic.SpawnMultiBalls(this);
             OnBonusPickup?.Invoke(collision.gameObject.tag);
         }
         else if (collision.gameObject.CompareTag("WidePadBonus"))
@@ -240,8 +236,11 @@ public class Pad : MonoBehaviour
     {
         GameObject ballObj = Instantiate(ballPrefab, Vector3.zero, Quaternion.identity);
         ballObj.transform.parent = transform;
-        ball = ballObj.GetComponent<Ball>();
+        Ball ball = ballObj.GetComponent<Ball>();
+        //LocalBalls.Add(ball);
+        
         ball.AssignPad(this);
+
         ballObj.transform.localPosition = ball.CenterOnPad(this.gameObject);
         ballsOnPad.Add(ball);
         FireBallsInRandomDirections();
@@ -290,8 +289,8 @@ public class Pad : MonoBehaviour
         {
             PowerDownWidePad();
         }
-
-        if (ball==null)
+        Debug.Log(LocalBalls.Count);
+        if (LocalBalls.Count==0)
         {
             OnLostLife?.Invoke();
             GetComponent<PadAgent>().Death();

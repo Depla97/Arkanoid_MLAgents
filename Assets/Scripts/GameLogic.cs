@@ -26,7 +26,10 @@ public class GameLogic : MonoBehaviour
 
     [SerializeField]
     GameObject[] levelPrefabs;
-
+    
+    [SerializeField]
+    GameObject PlayerPad;
+    
     private void OnEnable()
     {
         Pad.OnLostLife += HandleOnLostLife;
@@ -99,6 +102,8 @@ public class GameLogic : MonoBehaviour
             // Load a level prefab. Note that level numbers are 1-based.
             GameObject levelPrefab = levelPrefabs[levelNo - 1];
             currentLevel = Instantiate(levelPrefab, levelContainer.transform);
+            currentLevel.GetComponent<Bricks>().AssignPad(PlayerPad.GetComponent<Pad>());
+
         }
         else if (levelNo > levelPrefabs.Length)
         {
