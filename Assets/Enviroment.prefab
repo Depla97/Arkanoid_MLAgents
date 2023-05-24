@@ -1107,6 +1107,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2885753668560296802}
   - component: {fileID: 6893736617590027852}
+  - component: {fileID: 1703907735410081972}
   m_Layer: 11
   m_Name: bottomWall
   m_TagString: DeathZone
@@ -1122,7 +1123,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5291333833269057961}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -10.06, z: 2.999715}
+  m_LocalPosition: {x: 0, y: -10.06, z: 0}
   m_LocalScale: {x: -47.55804, y: 1.8829688, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1174,6 +1175,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1703907735410081972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5291333833269057961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03744ea718eb2334dbc9efd51e82178e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8786153867336282233
 GameObject:
   m_ObjectHideFlags: 0
@@ -1588,6 +1601,7 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
+  logic: {fileID: 5380561809807787102}
 --- !u!114 &6905410031091303620
 MonoBehaviour:
   m_ObjectHideFlags: 0

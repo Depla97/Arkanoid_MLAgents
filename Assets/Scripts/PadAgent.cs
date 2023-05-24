@@ -13,13 +13,14 @@ public class PadAgent : Agent
 
     private BufferSensorComponent BuffSensor;
     private Pad MyPad;
+    [SerializeField]
     private GameLogic logic;
     private int gameStat,counter;
     private void Start()
     {
         BuffSensor = GetComponent<BufferSensorComponent>();
         MyPad = GetComponent<Pad>();
-        logic = GameObject.Find("GameLogic").GetComponent<GameLogic>();
+        //logic = GameObject.Find("GameLogic").GetComponent<GameLogic>();
         gameStat = 0;
         counter = 0;
     }

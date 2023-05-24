@@ -214,7 +214,7 @@ public class Pad : MonoBehaviour
 
     void PowerDownLaser()
     {
-        useLaser = false;
+        //useLaser = false;
         animator.SetBool("Has Laser", useLaser);
     }
 
@@ -289,7 +289,7 @@ public class Pad : MonoBehaviour
         {
             PowerDownWidePad();
         }
-        Debug.Log(LocalBalls.Count);
+        //Debug.Log(LocalBalls.Count);
         if (LocalBalls.Count==0)
         {
             OnLostLife?.Invoke();

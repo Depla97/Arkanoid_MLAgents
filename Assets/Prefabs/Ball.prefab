@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3039885613299681260}
   - component: {fileID: 3039885613299681261}
   - component: {fileID: 3039885613299681263}
-  - component: {fileID: 528840511488406000}
   - component: {fileID: 3039885613299681249}
   - component: {fileID: 3039885613299681262}
   - component: {fileID: 8762018355095503388}
@@ -102,19 +101,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a284b998b88214961900bec9c217b571, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  body: {fileID: 0}
   impulseMagnitude: 15
---- !u!114 &528840511488406000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3039885613299681258}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2df730293cf4c4ac79054dcccf82c8be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &3039885613299681249
 Rigidbody2D:
   serializedVersion: 4
