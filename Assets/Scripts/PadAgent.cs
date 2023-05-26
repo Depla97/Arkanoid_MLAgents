@@ -56,15 +56,13 @@ public class PadAgent : Agent
     public override void CollectObservations(VectorSensor sensor){
         //sensor.AddObservation(ballTransform.localPosition);
         sensor.AddObservation(this.gameObject.transform.localPosition);
-        //OUCH! Expensive!
-        //TODO:append existing balls to an array instead of using FindObject
-        Ball[] Balls = Object.FindObjectsOfType<Ball>(); 
+        List<Ball> Balls = GetComponent<Pad>().LocalBalls;
         foreach (Ball ball in Balls)
         {
             //Every ball should have 4 variables: x,y position and x,y velocity
             float[] ballinfo = new float[4];
-            ballinfo[0] = ball.getBody().transform.position.x/18f;
-            ballinfo[1] = ball.getBody().transform.position.y/18f;
+            ballinfo[0] = ball.getBody().transform.localPosition.x;
+            ballinfo[1] = ball.getBody().transform.localPosition.y;
             //ballpos[2] = ball.getBody().transform.position.z; //z is always 0
             
             //since velocity is the same. we dont need to worry about it :)
