@@ -35,7 +35,7 @@ public class BonusesLogic : MonoBehaviour
             float dirX = Mathf.Cos(angle);
             float dirY = Mathf.Sin(angle);
 
-            Vector3 center = ball.transform.position;
+            Vector3 center = ball.transform.localPosition;
             Vector3 where = center + new Vector3(dirX, dirY, 0f) * multiballsSpawnRadius;
 
             // This is some tricky business to prevent balls appearing within the bricks collider :)

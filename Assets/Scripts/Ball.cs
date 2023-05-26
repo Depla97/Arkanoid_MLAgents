@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEditor.UI;
 using UnityEngine;
 
@@ -24,6 +25,9 @@ public class Ball : MonoBehaviour
     public void AssignPad(Pad pad){
         this.pad = pad;
         this.pad.LocalBalls.Add(this);
+        //this.gameObject.transform.parent = this.pad.transform.parent; 
+        //this.transform.SetParent(this.pad.transform.parent,false);
+        //print(this.pad.transform.parent.gameObject.name);
     }
 
     void Awake()
@@ -56,6 +60,8 @@ public class Ball : MonoBehaviour
         body.isKinematic = false;
         if (transform.parent != null)
             transform.parent = transform.parent.parent; // Free it from the pad-parent.
+        this.transform.SetParent(this.pad.transform.parent,false); // but stay local in the enviroment
+        //print(transform.parent.name);
         Vector2 impulse = impulseMagnitude * direction;
         body.AddForce(impulse, ForceMode2D.Impulse);
     }
