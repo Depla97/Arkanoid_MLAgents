@@ -136,28 +136,28 @@ public class Pad : MonoBehaviour
             bonusLogic.SpawnMultiBalls(this);
             OnBonusPickup?.Invoke(collision.gameObject.tag);
             LocalBonus.Remove(collision.gameObject);
-            GetComponent<PadAgent>().BonusScoring();
+            GetComponent<PadAgent>().BonusScoring("MultiballBonus");
         }
         else if (collision.gameObject.CompareTag("WidePadBonus"))
         {
             WidenPad();
             OnBonusPickup?.Invoke(collision.gameObject.tag);
             LocalBonus.Remove(collision.gameObject);
-            GetComponent<PadAgent>().BonusScoring();
+            GetComponent<PadAgent>().BonusScoring("WidePadBonus");
         }
         else if (collision.gameObject.CompareTag("StickyBonus"))
         {
             MakeSticky();
             OnBonusPickup?.Invoke(collision.gameObject.tag);
             LocalBonus.Remove(collision.gameObject);
-            GetComponent<PadAgent>().BonusScoring();
+            GetComponent<PadAgent>().BonusScoring("StickyBonus");
         }
         else if (collision.gameObject.CompareTag("LaserBonus"))
         {
             UseLaser();
             OnBonusPickup?.Invoke(collision.gameObject.tag);
             LocalBonus.Remove(collision.gameObject);
-            GetComponent<PadAgent>().BonusScoring();
+            GetComponent<PadAgent>().BonusScoring("LaserBonus");
         }
         
         Destroy(collision.gameObject);
