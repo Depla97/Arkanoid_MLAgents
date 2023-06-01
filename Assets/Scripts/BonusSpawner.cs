@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu]
@@ -36,7 +37,6 @@ public class BonusSpawner : ScriptableObject
         {
             result = Instantiate(bonus.prefab, where, Quaternion.identity);
         }
-
         return result;
     }
 }

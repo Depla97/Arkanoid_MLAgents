@@ -94,6 +94,12 @@ public class Bricks : MonoBehaviour
                 // Also play explosion effect if there is no bonus.
                 ExplodeBrick(hitPos, hitNormal, tile);
             }
+            else
+            {
+                // If bonus is valid, assign it to the parents ensuring the locality
+                bonus.transform.SetParent(this.transform.parent.parent);
+            }
+            
         }
 
         playerPad.GetComponent<PadAgent>().HitBrickScoring();
