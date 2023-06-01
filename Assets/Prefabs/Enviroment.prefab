@@ -1578,7 +1578,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd8012d5925524537b27131fef517017, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SensorName: BufferSensor
+  m_SensorName: BufferSensor1
   m_ObservableSize: 4
   m_MaxNumObservables: 100
 --- !u!114 &8248981279457420473
