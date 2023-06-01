@@ -1370,6 +1370,7 @@ MonoBehaviour:
   bonusLogic: {fileID: 7495730004235858052}
   widePadTime: 5
   LocalBalls: []
+  LocalBonus: []
 --- !u!212 &6287963024605871067
 SpriteRenderer:
   m_ObjectHideFlags: 0

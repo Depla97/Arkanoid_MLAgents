@@ -300,11 +300,16 @@ public class Pad : MonoBehaviour
         {
             PowerDownWidePad();
         }
+        
+    }
+
+    public void CheckLostBall(Ball ball)
+    {
         //Debug.Log(LocalBalls.Count);
         if (LocalBalls.Count==0)
         {
             OnLostLife?.Invoke();
-            GetComponent<PadAgent>().Death();
+            GetComponent<PadAgent>().Death(ball.transform.localPosition);
             HandleOnLostLife();
         }
     }

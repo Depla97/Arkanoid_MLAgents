@@ -112,13 +112,13 @@ public class PadAgent : Agent
 
     }
     
-    public void Death()
+    public void Death(Vector2 where)
     {
-        //Debug.Log("death registered");
-        //TODO migliora penalita' in base alla distanza della "morte"
-        AddReward(-150f);
+        float distance = Mathf.Abs(where.x - gameObject.transform.localPosition.x);
+        Debug.Log(distance);
+        AddReward(-(4*distance+80));
+        //min:80 max:~200
         gameStat -= 1;
-        //Debug.Log("Gamestat:"+gameStat);
         EndEpisode();
         
     }

@@ -96,6 +96,7 @@ public class Ball : MonoBehaviour
         {
             //Debug.Log("ball destroyed");
             this.pad.LocalBalls.Remove(this);
+            this.pad.CheckLostBall(this);
             Destroy(this.gameObject);
         }
     }
