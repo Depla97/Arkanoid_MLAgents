@@ -198,7 +198,7 @@ public class Pad : MonoBehaviour
     void MakeSticky()
     {
         //dont need glue ball yet
-        glueBall = false;
+        glueBall = true;
     }
 
     void WidenPad()
@@ -254,7 +254,7 @@ public class Pad : MonoBehaviour
 
         ballObj.transform.localPosition = ball.CenterOnPad(this.gameObject);
         ballsOnPad.Add(ball);
-        FireBallsInRandomDirections();
+        //FireBallsInRandomDirections();
     }
 
     void FireLaser()

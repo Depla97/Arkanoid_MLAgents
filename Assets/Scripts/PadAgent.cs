@@ -117,6 +117,11 @@ public class PadAgent : Agent
     public override void OnActionReceived(ActionBuffers actionBuffers){
         float moveX = actionBuffers.ContinuousActions[0];
         this.gameObject.transform.localPosition += new Vector3(moveX, 0, 0) * Time.deltaTime * 30;
+        int fire = actionBuffers.DiscreteActions[0];
+        //if (fire == 1)
+        //{
+        //    this.MyPad.FireBallsInRandomDirections();
+        //}
 
     }
     
