@@ -18,6 +18,7 @@ public class PadAgent : Agent
     private GameLogic logic;
     private int gameStat,counter;
     private Dictionary<string, float> bonusTypes;
+    private Dictionary<string, float> bonusWeight;
     private void Start()
     {
         BallSensor = GetComponents<BufferSensorComponent>()[0];
@@ -31,6 +32,12 @@ public class PadAgent : Agent
         bonusTypes.Add("WidePadBonus",1f);
         bonusTypes.Add("StickyBonus",2f);
         bonusTypes.Add("LaserBonus",3f);
+        
+        bonusWeight = new Dictionary<string, float>();
+        bonusWeight.Add("MultiballBonus",10f);
+        bonusWeight.Add("WidePadBonus",5f);
+        bonusWeight.Add("StickyBonus",1f);
+        bonusWeight.Add("LaserBonus",8f);
         
     }
 
@@ -48,9 +55,10 @@ public class PadAgent : Agent
         //Debug.Log("add 15 score: ball hit with the Brick");
     }
 
-    public void BonusScoring(int weight = 1)
+    public void BonusScoring(string bonusTag,int weight = 1)
     {
-        AddReward(weight*30f);
+        
+        AddReward(weight*30f+bonusWeight[bonusTag]);
     }
     
     public override void OnEpisodeBegin(){
