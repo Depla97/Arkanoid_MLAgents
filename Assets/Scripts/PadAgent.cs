@@ -11,18 +11,27 @@ using Object = UnityEngine.Object;
 public class PadAgent : Agent
 {
 
-    private BufferSensorComponent BuffSensor;
+    private BufferSensorComponent BallSensor;
+    private BufferSensorComponent BonusSensor;
     private Pad MyPad;
     [SerializeField]
     private GameLogic logic;
     private int gameStat,counter;
+    private Dictionary<string, float> bonusTypes;
     private void Start()
     {
-        BuffSensor = GetComponent<BufferSensorComponent>();
+        BallSensor = GetComponents<BufferSensorComponent>()[0];
+        BonusSensor = GetComponents<BufferSensorComponent>()[1];
         MyPad = GetComponent<Pad>();
         //logic = GameObject.Find("GameLogic").GetComponent<GameLogic>();
         gameStat = 0;
         counter = 0;
+        bonusTypes = new Dictionary<string, float>();
+        bonusTypes.Add("MultiballBonus",0f);
+        bonusTypes.Add("WidePadBonus",1f);
+        bonusTypes.Add("StickyBonus",2f);
+        bonusTypes.Add("LaserBonus",3f);
+        
     }
 
     public void CatchBallScoring()
@@ -37,6 +46,11 @@ public class PadAgent : Agent
         AddReward(15f);
         gameStat += 1;
         //Debug.Log("add 15 score: ball hit with the Brick");
+    }
+
+    public void BonusScoring(int weight = 1)
+    {
+        AddReward(weight*30f);
     }
     
     public override void OnEpisodeBegin(){
@@ -70,8 +84,25 @@ public class PadAgent : Agent
             ballinfo[3] = ball.getBody().velocity.y;
             //Debug.Log("Ball info pos"+ballinfo[0] +" " + ballinfo[1]);
             
-            BuffSensor.AppendObservation(ballinfo);
+            BallSensor.AppendObservation(ballinfo);
         }
+
+        foreach (var Bonus in MyPad.LocalBonus)
+        {
+            //Every ball should have 4 variables: x,y position and x,y velocity
+            float[] bonusInfo = new float[4];
+            
+            bonusInfo[0] = bonusTypes[Bonus.tag];
+            bonusInfo[1] = Bonus.transform.localPosition.x;
+            bonusInfo[2] = Bonus.transform.localPosition.y;
+            
+            //since velocity is the same. we dont need to worry about it :)
+            bonusInfo[3] = Bonus.GetComponent<Rigidbody2D>().velocity.y;
+            
+            BonusSensor.AppendObservation(bonusInfo);
+        }
+
+        
 
     }
 
@@ -84,6 +115,7 @@ public class PadAgent : Agent
     public void Death()
     {
         //Debug.Log("death registered");
+        //TODO migliora penalita' in base alla distanza della "morte"
         AddReward(-150f);
         gameStat -= 1;
         //Debug.Log("Gamestat:"+gameStat);

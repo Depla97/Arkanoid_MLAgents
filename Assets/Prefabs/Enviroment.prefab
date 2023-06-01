@@ -1324,6 +1324,7 @@ GameObject:
   - component: {fileID: 1786123607401038061}
   - component: {fileID: 3633857394492954472}
   - component: {fileID: 6905410031091303620}
+  - component: {fileID: 7687529720410267679}
   - component: {fileID: 8248981279457420473}
   m_Layer: 10
   m_Name: PlayerPad
@@ -1578,9 +1579,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd8012d5925524537b27131fef517017, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SensorName: BufferSensor1
+  m_SensorName: BallSensor
   m_ObservableSize: 4
   m_MaxNumObservables: 100
+--- !u!114 &7687529720410267679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8899564009333805753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd8012d5925524537b27131fef517017, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SensorName: BonusSensor
+  m_ObservableSize: 4
+  m_MaxNumObservables: 20
 --- !u!114 &8248981279457420473
 MonoBehaviour:
   m_ObjectHideFlags: 0

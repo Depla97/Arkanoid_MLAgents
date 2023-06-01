@@ -98,6 +98,8 @@ public class Bricks : MonoBehaviour
             {
                 // If bonus is valid, assign it to the parents ensuring the locality
                 bonus.transform.SetParent(this.transform.parent.parent);
+                playerPad.LocalBonus.Add(bonus);
+                bonus.GetComponent<BonusCollision>().playerPad = playerPad;
             }
             
         }

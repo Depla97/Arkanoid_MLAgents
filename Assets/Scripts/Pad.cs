@@ -59,9 +59,11 @@ public class Pad : MonoBehaviour
     float widePadActiveTime;
 
     List<Ball> ballsOnPad;
+    
 
     public List<Ball> LocalBalls;
-
+    public List<GameObject> LocalBonus;
+    
     // private void OnTriggerEnter2D(Collider other){
     //     if(other.CompareTag("Ball")){
     //         AddReward(20f);
@@ -84,7 +86,7 @@ public class Pad : MonoBehaviour
         ballsOnPad = new List<Ball>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-
+        LocalBonus = new List<GameObject>();
         SpawnBallOnPad();
     }
 
@@ -128,27 +130,36 @@ public class Pad : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
+
         if (collision.gameObject.CompareTag("MultiballBonus"))
         {
             bonusLogic.SpawnMultiBalls(this);
             OnBonusPickup?.Invoke(collision.gameObject.tag);
+            LocalBonus.Remove(collision.gameObject);
+            GetComponent<PadAgent>().BonusScoring();
         }
         else if (collision.gameObject.CompareTag("WidePadBonus"))
         {
             WidenPad();
             OnBonusPickup?.Invoke(collision.gameObject.tag);
+            LocalBonus.Remove(collision.gameObject);
+            GetComponent<PadAgent>().BonusScoring();
         }
         else if (collision.gameObject.CompareTag("StickyBonus"))
         {
             MakeSticky();
             OnBonusPickup?.Invoke(collision.gameObject.tag);
+            LocalBonus.Remove(collision.gameObject);
+            GetComponent<PadAgent>().BonusScoring();
         }
         else if (collision.gameObject.CompareTag("LaserBonus"))
         {
             UseLaser();
             OnBonusPickup?.Invoke(collision.gameObject.tag);
+            LocalBonus.Remove(collision.gameObject);
+            GetComponent<PadAgent>().BonusScoring();
         }
-
+        
         Destroy(collision.gameObject);
     }
 
@@ -214,7 +225,7 @@ public class Pad : MonoBehaviour
 
     void PowerDownLaser()
     {
-        //useLaser = false;
+        useLaser = false;
         animator.SetBool("Has Laser", useLaser);
     }
 
