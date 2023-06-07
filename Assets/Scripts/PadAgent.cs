@@ -62,6 +62,8 @@ public class PadAgent : Agent
     }
     
     public override void OnEpisodeBegin(){
+
+        // Debug.Log("Nuovo episodio");
         GetComponent<Pad>().FireBallsInRandomDirections();
         counter++;
         if (counter > 5)
@@ -115,18 +117,21 @@ public class PadAgent : Agent
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers){
+        
         float moveX = actionBuffers.ContinuousActions[0];
         this.gameObject.transform.localPosition += new Vector3(moveX, 0, 0) * Time.deltaTime * 30;
-        int fire = actionBuffers.DiscreteActions[0];
-        //if (fire == 1)
-        //{
-        //    this.MyPad.FireBallsInRandomDirections();
-        //}
-
+        
+        var fire = actionBuffers.DiscreteActions[0];
+        Debug.Log("Fire = " + fire);
+        if (fire == 1)
+        {
+           this.MyPad.Fire();
+        }
     }
     
     public void Death(Vector2 where)
     {
+        // Debug.Log("Sono morto");
         float distance = Mathf.Abs(where.x - gameObject.transform.localPosition.x);
         Debug.Log(distance);
         AddReward(-(4*distance+80));

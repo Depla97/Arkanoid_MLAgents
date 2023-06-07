@@ -1537,7 +1537,7 @@ MonoBehaviour:
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 1
-      BranchSizes: 01000000
+      BranchSizes: 02000000
     VectorActionSize: 
     VectorActionDescriptions: []
     VectorActionSpaceType: 1

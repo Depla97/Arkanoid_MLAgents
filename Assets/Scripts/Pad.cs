@@ -231,6 +231,7 @@ public class Pad : MonoBehaviour
 
     public void FireBallsInRandomDirections()
     {
+        
         glueBall = false;
 
         foreach (Ball b in this.ballsOnPad)
@@ -280,10 +281,7 @@ public class Pad : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            FireBallsInRandomDirections();
-
-            if (useLaser && Time.time > laserCanFireTime)
-                FireLaser();
+            Fire();
         }
         else if (Input.GetKeyDown(KeyCode.R))
         {
@@ -317,5 +315,13 @@ public class Pad : MonoBehaviour
     public List<Ball> getBalls()
     {
         return this.ballsOnPad;
+    }
+
+
+    public void Fire(){
+        FireBallsInRandomDirections();
+
+            if (useLaser && Time.time > laserCanFireTime)
+                FireLaser();
     }
 }
