@@ -1,0 +1,54 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1686634496",
+        "python_version": "3.8.16 (default, Mar  2 2023, 03:18:16) [MSC v.1916 64 bit (AMD64)]",
+        "command_line_arguments": "C:\\Users\\Leo\\.conda\\envs\\unityML\\Scripts\\mlagents-learn --resume",
+        "mlagents_version": "0.30.0",
+        "mlagents_envs_version": "0.30.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "2.0.1+cu117",
+        "numpy_version": "1.21.2",
+        "end_time_seconds": "1686634509"
+    },
+    "total": 12.9256882,
+    "count": 1,
+    "self": 0.01940049999999971,
+    "children": {
+        "run_training.setup": {
+            "total": 0.03912339999999981,
+            "count": 1,
+            "self": 0.03912339999999981
+        },
+        "TrainerController.start_learning": {
+            "total": 12.8671643,
+            "count": 1,
+            "self": 0.00019230000000014513,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 12.0434722,
+                    "count": 1,
+                    "self": 12.0434722
+                },
+                "trainer_threads": {
+                    "total": 1.1999999998124622e-06,
+                    "count": 1,
+                    "self": 1.1999999998124622e-06
+                },
+                "TrainerController._save_models": {
+                    "total": 0.8234986000000006,
+                    "count": 1,
+                    "self": 0.0016265999999998115,
+                    "children": {
+                        "RLTrainer._checkpoint": {
+                            "total": 0.8218720000000008,
+                            "count": 1,
+                            "self": 0.8218720000000008
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

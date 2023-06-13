@@ -133,7 +133,7 @@ public class PadAgent : Agent
     {
         // Debug.Log("Sono morto");
         float distance = Mathf.Abs(where.x - gameObject.transform.localPosition.x);
-        Debug.Log(distance);
+        //Debug.Log(distance);
         AddReward(-(4*distance+80));
         //min:80 max:~200
         gameStat -= 1;
