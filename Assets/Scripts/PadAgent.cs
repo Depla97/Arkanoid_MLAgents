@@ -115,6 +115,14 @@ public class PadAgent : Agent
 
     }
 
+    public void FinishLevel(int level=1){
+        AddReward(200*level);
+    }
+
+    public void Victory(){
+        AddReward(600);
+    }
+
     public override void OnActionReceived(ActionBuffers actionBuffers){
         
         float moveX = actionBuffers.ContinuousActions[0];
@@ -133,6 +141,8 @@ public class PadAgent : Agent
         // Debug.Log("Sono morto");
         float distance = Mathf.Abs(where.x - gameObject.transform.localPosition.x);
         //Debug.Log(distance);
+
+        //min:80 max:~200
         AddReward(-(4*distance+80));
         deathCount++
         //se supera 3 morte, resetta tutto.
@@ -141,7 +151,7 @@ public class PadAgent : Agent
             deathCount = 0
             EndEpisode();
         }
-        //min:80 max:~200
+        
         gameStat -= 1;
         
         
