@@ -19,6 +19,7 @@ public class PadAgent : Agent
     private int gameStat,counter;
     private Dictionary<string, float> bonusTypes;
     private Dictionary<string, float> bonusWeight;
+    private int deathCount;
     private void Start()
     {
         BallSensor = GetComponents<BufferSensorComponent>()[0];
@@ -66,7 +67,7 @@ public class PadAgent : Agent
         // Debug.Log("Nuovo episodio");
         GetComponent<Pad>().FireBallsInRandomDirections();
         counter++;
-        if (counter > 5)
+        if (counter => 3)
         {
             Debug.Log("TotalScore: "+gameStat);
             counter = 0;
@@ -133,9 +134,16 @@ public class PadAgent : Agent
         float distance = Mathf.Abs(where.x - gameObject.transform.localPosition.x);
         //Debug.Log(distance);
         AddReward(-(4*distance+80));
+        deathCount++
+        //se supera 3 morte, resetta tutto.
+        if(deathCount >=3){
+            AddReward(-500);
+            deathCount = 0
+            EndEpisode();
+        }
         //min:80 max:~200
         gameStat -= 1;
-        EndEpisode();
+        
         
     }
         
