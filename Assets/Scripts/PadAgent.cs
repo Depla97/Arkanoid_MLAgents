@@ -66,16 +66,8 @@ public class PadAgent : Agent
 
         // Debug.Log("Nuovo episodio");
         GetComponent<Pad>().FireBallsInRandomDirections();
-        counter++;
-        if (counter => 3)
-        {
-            Debug.Log("TotalScore: "+gameStat);
-            counter = 0;
-            gameStat = 0;
-            logic.ReloadLevel(1);
+        logic.ReloadLevel(1);
             
-        }
-
     }
 
     public override void CollectObservations(VectorSensor sensor){
@@ -121,6 +113,7 @@ public class PadAgent : Agent
 
     public void Victory(){
         AddReward(600);
+        EndEpisode();
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers){
@@ -144,17 +137,14 @@ public class PadAgent : Agent
 
         //min:80 max:~200
         AddReward(-(4*distance+80));
-        deathCount++
+        deathCount++;
         //se supera 3 morte, resetta tutto.
         if(deathCount >=3){
             AddReward(-500);
-            deathCount = 0
+            deathCount = 0;
             EndEpisode();
         }
-        
         gameStat -= 1;
-        
-        
     }
         
 }

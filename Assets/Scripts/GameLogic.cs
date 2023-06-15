@@ -81,9 +81,9 @@ public class GameLogic : MonoBehaviour
     IEnumerator LoadNewLevel()
     {
         yield return new WaitForSeconds(0.7f);
-        
-        //level.Value += 1;
-        level.Value = 1;
+        PlayerPad.GetComponent<PadAgent>().FinishLevel(level.Value);
+        level.Value += 1;
+        //level.Value = 1;
         SceneManager.LoadScene("Levels");
     }
 
@@ -107,7 +107,8 @@ public class GameLogic : MonoBehaviour
         }
         else if (levelNo > levelPrefabs.Length)
         {
-            Won();
+            PlayerPad.GetComponent<PadAgent>().Victory();
+            //Won();
         }
     }
 
