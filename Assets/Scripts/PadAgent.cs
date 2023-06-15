@@ -112,8 +112,6 @@ public class PadAgent : Agent
             BonusSensor.AppendObservation(bonusInfo);
         }
 
-        
-
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers){
