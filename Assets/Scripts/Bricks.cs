@@ -8,6 +8,8 @@ public class Bricks : MonoBehaviour
     public static event Action<TileBase> OnBrickDestroyed;
     public static event Action OnAllBricksDestroyed;
 
+    private GameLogic logic;
+
     [SerializeField]
     BricksStateMapping bricksMapping;
 
@@ -31,6 +33,11 @@ public class Bricks : MonoBehaviour
     public void AssignPad(Pad levelPad)
     {
         playerPad = levelPad;
+    }
+
+    public void AssignLogic(GameLogic logic)
+    {
+        this.logic = logic;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -79,7 +86,7 @@ public class Bricks : MonoBehaviour
         OnBrickHit?.Invoke(tile);
 
         if (NumberOfRemainingBricks() == 0)
-            OnAllBricksDestroyed?.Invoke();
+            logic.HandleNextLevel();
 
         if (nextTile == null)
         {

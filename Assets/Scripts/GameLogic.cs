@@ -13,13 +13,12 @@ public class GameLogic : MonoBehaviour
     private GameObject currentLevel;
 
     [SerializeField]
-    IntVar lives;
+    int lives;
 
     [SerializeField]
-    IntVar score;
-
-    [SerializeField]
-    IntVar level;
+    int score;
+    
+    private int level;
 
     [SerializeField]
     GameObject levelContainer;
@@ -46,17 +45,20 @@ public class GameLogic : MonoBehaviour
 
     private void Awake()
     {
-        LoadLevelMap(level.Value);
+        LoadLevelMap(level);
     }
 
     void HandleOnLostLife()
     {
-        //lives.Value -= 1;
+        lives -= 1;
         // Debug.Log("Vita persa");
-        if (lives.Value == 0)
+        if (lives == 0)
         {
-            OnGameOver?.Invoke();
-            StartCoroutine(nameof(GameOver));
+            Debug.Log("Game over");
+            lives = 3;
+            //PlayerPad.GetComponent<PadAgent>().gameover();
+            //OnGameOver?.Invoke();
+            //StartCoroutine(nameof(GameOver));
         }
     }
 
@@ -64,7 +66,7 @@ public class GameLogic : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
 
-        SceneManager.LoadScene("GameOver");
+        //SceneManager.LoadScene("GameOver");
     }
 
     void Won()
@@ -72,19 +74,20 @@ public class GameLogic : MonoBehaviour
         SceneManager.LoadScene("Won");
     }
 
-    void HandleNextLevel()
+    public void HandleNextLevel()
     {
-         OnLevelCleared?.Invoke(level.Value);
-         StartCoroutine(nameof(LoadNewLevel));
+         OnLevelCleared?.Invoke(level);
+         
+         PlayerPad.GetComponent<PadAgent>().FinishLevel(level);
+         LoadNewLevel();
     }
 
-    IEnumerator LoadNewLevel()
+    public void LoadNewLevel()
     {
-        yield return new WaitForSeconds(0.7f);
-        PlayerPad.GetComponent<PadAgent>().FinishLevel(level.Value);
-        level.Value += 1;
-        //level.Value = 1;
-        SceneManager.LoadScene("Levels");
+        level += 1;
+        print("next level:"+level);
+        LoadLevelMap(level);
+        //SceneManager.LoadScene("Levels");
     }
 
     void LoadLevelMap(int levelNo)
@@ -103,6 +106,7 @@ public class GameLogic : MonoBehaviour
             GameObject levelPrefab = levelPrefabs[levelNo - 1];
             currentLevel = Instantiate(levelPrefab, levelContainer.transform);
             currentLevel.GetComponent<Bricks>().AssignPad(PlayerPad.GetComponent<Pad>());
+            currentLevel.GetComponent<Bricks>().AssignLogic(this);
 
         }
         else if (levelNo > levelPrefabs.Length)
@@ -114,14 +118,15 @@ public class GameLogic : MonoBehaviour
 
     public void ReloadLevel(int selectLevel)
     {
-        
+        print("reloading level");
         Destroy(currentLevel);
+        print("loaded level:"+selectLevel);
         LoadLevelMap(selectLevel);
-        level.Value = selectLevel;
+        level = selectLevel;
     }
 
     void HandleBrokenBrick(TileBase _brick)
     {
-        score.Value += 1;
+        score += 1;
     }
 }

@@ -64,8 +64,7 @@ public class PadAgent : Agent
     
     public override void OnEpisodeBegin(){
 
-        // Debug.Log("Nuovo episodio");
-        GetComponent<Pad>().FireBallsInRandomDirections();
+        Debug.Log("Nuovo episodio");
         logic.ReloadLevel(1);
             
     }
@@ -108,10 +107,12 @@ public class PadAgent : Agent
     }
 
     public void FinishLevel(int level=1){
+        print("next level");
         AddReward(200*level);
     }
 
     public void Victory(){
+        print("all levels completed!");
         AddReward(600);
         EndEpisode();
     }
@@ -128,6 +129,13 @@ public class PadAgent : Agent
            this.MyPad.Fire();
         }
     }
+
+    public void gameover(){
+        print("game over, end episode.");
+        AddReward(-500);
+        deathCount = 0;
+        EndEpisode();
+    }
     
     public void Death(Vector2 where)
     {
@@ -139,10 +147,9 @@ public class PadAgent : Agent
         AddReward(-(4*distance+80));
         deathCount++;
         //se supera 3 morte, resetta tutto.
-        if(deathCount >=3){
-            AddReward(-500);
-            deathCount = 0;
-            EndEpisode();
+        if(deathCount >=3)
+        {
+            gameover();
         }
         gameStat -= 1;
     }

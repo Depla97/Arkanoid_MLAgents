@@ -462,9 +462,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc52841034284a57840331921ac75b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lives: {fileID: 11400000, guid: f9230c5653f63493ea9d25242f6e743a, type: 2}
-  score: {fileID: 11400000, guid: 0bbeb26497fd1467c8ea9835a74a4478, type: 2}
-  level: {fileID: 11400000, guid: 7e217ad8b719f4734959992b529697e8, type: 2}
+  lives: 0
+  score: 0
   levelContainer: {fileID: 3801953016635763674}
   levelPrefabs:
   - {fileID: 1735832331200091414, guid: 1b61e632d3dc54250a3c0448802c69fc, type: 3}
