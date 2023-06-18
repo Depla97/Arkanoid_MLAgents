@@ -320,8 +320,7 @@ public class Pad : MonoBehaviour
 
     public void Fire(){
         FireBallsInRandomDirections();
-
-            if (useLaser && Time.time > laserCanFireTime)
+        if (useLaser && Time.time > laserCanFireTime)
                 FireLaser();
     }
 }

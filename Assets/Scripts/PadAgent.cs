@@ -16,18 +16,17 @@ public class PadAgent : Agent
     private Pad MyPad;
     [SerializeField]
     private GameLogic logic;
-    private int gameStat,counter;
+    private int gameStat,deathCount;
     private Dictionary<string, float> bonusTypes;
     private Dictionary<string, float> bonusWeight;
-    private int deathCount;
     private void Start()
     {
+        InvokeRepeating("CountDown", 0.0f, 1f);
         BallSensor = GetComponents<BufferSensorComponent>()[0];
         BonusSensor = GetComponents<BufferSensorComponent>()[1];
         MyPad = GetComponent<Pad>();
         //logic = GameObject.Find("GameLogic").GetComponent<GameLogic>();
         gameStat = 0;
-        counter = 0;
         bonusTypes = new Dictionary<string, float>();
         bonusTypes.Add("MultiballBonus",0f);
         bonusTypes.Add("WidePadBonus",1f);
@@ -40,6 +39,11 @@ public class PadAgent : Agent
         bonusWeight.Add("StickyBonus",1f);
         bonusWeight.Add("LaserBonus",8f);
         
+    }
+
+    private void CountDown()
+    {
+        AddReward(-1f);
     }
 
     public void CatchBallScoring()
