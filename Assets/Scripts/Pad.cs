@@ -126,6 +126,16 @@ public class Pad : MonoBehaviour
         var newPos = new Vector3(newX, pos.y, 0);
 
         transform.localPosition = newPos;
+
+        foreach (Ball ball in LocalBalls)
+        {
+            if (ball.getBody().velocity.magnitude == 0)
+            {
+                Debug.Log("ball bad velocity");
+            }
+        }
+
+        
     }
 
     void OnTriggerEnter2D(Collider2D collision)
